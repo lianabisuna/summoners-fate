@@ -9,23 +9,27 @@
           tile
           dark
           text
-          min-width="36"
-          max-width="36"
+          min-width="44"
+          max-width="44"
           color="#e3a746"
           :ripple="false"
-          :class="[ 'no-bg-hover mr-5', active?'active-letter':'letter' ]"
+          :class="[ 'button-letter no-bg-hover mr-5', active?'active-letter':'letter' ]"
+          depressed
+          large
         >
           {{ letter }}
         </v-btn>
         <v-hover v-slot="{ hover }">
           <v-btn
-            v-bind="attrs"
-            v-on="on"
+            v-bind="{...attrs,  ...$attrs}"
+            v-on="{...on, ...$listeners}"
             tile
             dark
             :color="hover?'rgba(227,167,70,0.4)':'rgba(227,167,70,0.2)'"
-            :class="[ 'text-yellow text-none', { 'active-text':active } ]"
+            :class="[ 'button-text text-none justify-start', { 'active-text':active } ]"
             @click="active=!active"
+            depressed
+            large
           >
             {{ text }}
           </v-btn>
@@ -73,7 +77,12 @@
     outline: 2px solid #e3a746;
   }
 
-  .text-yellow {
+  .button-text {
     color: #e3a746 !important;
+    font-size: 22px !important;
+  }
+
+  .button-letter {
+    font-size: 22px !important;
   }
 </style>

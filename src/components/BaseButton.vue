@@ -5,8 +5,8 @@
   >
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-        v-bind="attrs"
-        v-on="on"
+        v-bind="{...attrs, ...$attrs}"
+        v-on="{...on, ...$listeners }"
         tile
         x-large
         :color="blue?'#0BC6E3':'#e3a746'"
