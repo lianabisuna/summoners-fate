@@ -1,15 +1,22 @@
 <template>
-  <div class="d-flex align-center">
-    <v-btn
-      tile
-      x-large
-      :color="blue?'#0BC6E3':'#e3a746'"
-      class="text-none button"
-    >
-      {{ text }}
-    </v-btn>
-    <span class="text-caption ml-5">press <strong>Enter</strong> ↵</span>
-  </div>
+  <v-tooltip
+    right
+    color="transparent"
+  >
+    <template v-slot:activator="{ on, attrs }">
+      <v-btn
+        v-bind="attrs"
+        v-on="on"
+        tile
+        x-large
+        :color="blue?'#0BC6E3':'#e3a746'"
+        class="button"
+      >
+        {{ text }}
+      </v-btn>
+    </template>
+    <span class="text-caption">press <strong>Enter</strong> ↵</span>
+  </v-tooltip>
 </template>
 
 <script>
@@ -25,10 +32,10 @@
 
 <style lang="scss" scoped>
   .button {
-    font-size: 23px !important;
+    font-size: 25px !important;
     color: #193352 !important;
-    letter-spacing: normal;
-    font-weight: bold;
+    letter-spacing: 0.5px;
+    font-weight: 800;
     outline: 2px solid #ffffff;
   }
 </style>
