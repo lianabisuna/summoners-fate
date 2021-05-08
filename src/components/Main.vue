@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex align-center justify-center" style="height: 100%;">
-    <div class="text-center">
+    <div class="text-center mx-2">
       <v-img
         contain
         src="@/assets/logo.png"

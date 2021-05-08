@@ -4,7 +4,7 @@
     color="transparent"
   >
     <template v-slot:activator="{ on, attrs }">
-      <div>
+      <div class="d-flex align-start justify-center text-center">
         <v-btn
           tile
           dark
@@ -20,19 +20,15 @@
           {{ letter }}
         </v-btn>
         <v-hover v-slot="{ hover }">
-          <v-btn
+          <div
             v-bind="{...attrs,  ...$attrs}"
             v-on="{...on, ...$listeners}"
-            tile
-            dark
-            :color="hover?'rgba(227,167,70,0.4)':'rgba(227,167,70,0.2)'"
-            :class="[ 'button-text text-none justify-start', { 'active-text':active } ]"
+            :color="hover?'rgba(227,167,70,0.3)':'rgba(227,167,70,0.1)'"
+            :class="[ 'px-3 button-text text-none justify-start d-flex align-center', { 'active-text':active } ]"
             @click="active=!active"
-            depressed
-            large
           >
-            {{ text }}
-          </v-btn>
+            <span>{{ text }}</span>
+          </div>
         </v-hover>
       </div>
     </template>
@@ -57,9 +53,9 @@
 
 <style lang="scss" scoped>
   .letter {
-    -webkit-box-shadow:inset 0px 0px 0px 1px rgba(227,167,70,0.2);
-    -moz-box-shadow:inset 0px 0px 0px 1px rgba(227,167,70,0.2);
-    box-shadow:inset 0px 0px 0px 1px rgba(227,167,70,0.2);
+    -webkit-box-shadow:inset 0px 0px 0px 1px #e3a746;
+    -moz-box-shadow:inset 0px 0px 0px 1px #e3a746;
+    box-shadow:inset 0px 0px 0px 1px #e3a746;
     color: #e3a746 !important;
   }
 
@@ -69,20 +65,36 @@
   
   .active-letter {
     background: #e3a746;
-    outline: 2px solid #e3a746;
+    outline: 3px solid #e3a746;
     color: #000000 !important;
   }
   
   .active-text {
-    outline: 2px solid #e3a746;
+    outline: 3px solid #e3a746 !important;
   }
 
   .button-text {
     color: #e3a746 !important;
     font-size: 22px !important;
+    outline: 1px solid #e3a746;
+    min-height: 44px;
+    width: 100%;
+    cursor: pointer;
+    background: rgba(227,167,70,0.1);
+  }
+
+  .button-text:hover {
+    background: rgba(227,167,70,0.3);
   }
 
   .button-letter {
     font-size: 22px !important;
+  }
+
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .button-letter, .button-text {
+      font-size: 18px !important;
+    }
   }
 </style>

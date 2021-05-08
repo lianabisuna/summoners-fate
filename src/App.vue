@@ -38,4 +38,27 @@ export default {
   .paragraph-1 {
     font-size: 1.5em;
   }
+
+  .paragraph-4 {
+    font-size: 4em;
+  }
+
+  .text-yellow {
+    color: #e3a746;
+  }
+
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    //
+  }
+
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+    //
+  }
+
+  /* Desktops and laptops ----------- */
+  @media only screen  and (min-width : 1224px) {
+    //
+  }
 </style>

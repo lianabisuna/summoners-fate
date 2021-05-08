@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-center">
+  <div class="d-flex align-center justify-center">
     <v-avatar
       color="#0BC6E3"
       size="20"
@@ -29,5 +29,12 @@
 
   .counter {
     color: #0BC6E3;
+  }
+
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .question {
+      font-size: 20px;
+    }
   }
 </style>
