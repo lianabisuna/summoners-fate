@@ -7,14 +7,13 @@
 </template>
 
 <script>
+  export default {
+    name: 'App',
 
-export default {
-  name: 'App',
-
-  data: () => ({
-    //
-  }),
-};
+    data: () => ({
+      //
+    }),
+  };
 </script>
 
 <style lang="scss">
@@ -49,7 +48,13 @@ export default {
 
   /* Smartphones (portrait and landscape) ----------- */
   @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
-    //
+    .paragraph-1 {
+      font-size: 1.2em;
+    }
+
+    .paragraph-4 {
+      font-size: 3em;
+    }
   }
 
   /* iPads (portrait and landscape) ----------- */

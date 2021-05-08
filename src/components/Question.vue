@@ -7,6 +7,7 @@
     >
       <span class="white--text text-caption">{{ counter }}</span>
     </v-avatar>
+    
     <span class="question">{{ question }}</span>
   </div>
 </template>

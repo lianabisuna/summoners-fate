@@ -1,11 +1,14 @@
 <template>
-  <div class="d-flex align-center justify-center" style="height: 100%;">
-    <div class="text-center mx-2">
+  <div
+    class="d-flex align-center justify-center"
+    style="height: 100%;"
+  >
+    <div class="text-center mx-5">
       <v-img
         contain
         src="@/assets/logo.png"
         alt="logo"
-        width="120"
+        :width="screen.smAndDown?'80':'120'"
         class="mx-auto mb-5"
       ></v-img>
 
@@ -13,7 +16,7 @@
         contain
         src="@/assets/banner.png"
         alt="banner"
-        :width="screen.smAndDown?'90vw':'500'"
+        :width="screen.smAndDown?'80vw':'500'"
         class="mx-auto"
       ></v-img>
 
@@ -38,6 +41,13 @@
         get() { return this.$store.getters['main/component'] },
         set(val) { this.$store.commit('main/setComponent', val) }
       }
+    },
+
+    mounted() {
+      window.addEventListener("keypress", e => {
+        if (e.key == 'Enter')
+          this.start();
+      });
     },
 
     methods: {

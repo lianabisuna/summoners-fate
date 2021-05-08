@@ -9,30 +9,45 @@
           tile
           dark
           text
-          min-width="44"
-          max-width="44"
-          color="#e3a746"
-          :ripple="false"
-          :class="[ 'button-letter no-bg-hover mr-5', active?'active-letter':'letter' ]"
+          :large="screen.lgAndUp"
           depressed
-          large
+          :ripple="false"
+          :min-width="screen.smAndDown?'38':'44'"
+          :max-width="screen.smAndDown?'38':'44'"
+          :height="screen.smAndDown?'38':'44'"
+          color="#e3a746"
+          :class="[
+            'button-letter mr-5',
+            isActive?'active-letter':'letter',
+            { 'unclickable':isDisabled }
+          ]"
         >
           {{ letter }}
         </v-btn>
+
         <v-hover v-slot="{ hover }">
           <div
             v-bind="{...attrs,  ...$attrs}"
             v-on="{...on, ...$listeners}"
             :color="hover?'rgba(227,167,70,0.3)':'rgba(227,167,70,0.1)'"
-            :class="[ 'px-3 button-text text-none justify-start d-flex align-center', { 'active-text':active } ]"
-            @click="active=!active"
+            :class="[
+              'button-text text-none px-3 justify-start d-flex align-center',
+              { 'active-text':isActive, 'unclickable':isDisabled }
+            ]"
+            @click="isActive=true"
           >
-            <span>{{ text }}</span>
+            {{ text }}
           </div>
         </v-hover>
       </div>
     </template>
-    <span class="text-caption">press key →</span>
+
+    <span
+      v-if="screen.lgAndUp"
+      class="text-caption"
+    >
+      press key →
+    </span>
   </v-tooltip>
 </template>
 
@@ -41,12 +56,38 @@
     name: 'BaseChoice',
 
     props: {
+      disable: { type: Boolean, default: false },
+      active: { type: Boolean, default: false },
       letter: { type: String, default: '' },
       text: { type: String, default: '' }
     },
 
+    watch: {
+      // active or isActive
+      active(val) {
+        this.isActive = val;
+      },
+
+      isActive(val) {
+        this.$emit('input', val)
+      },
+      // disable or isDisabled
+      disable(val) {
+        this.isDisabled = val;
+      },
+
+      isDisabled(val) {
+        this.$emit('input', val)
+      }
+    },
+
+    computed: {
+      screen() { return this.$vuetify.breakpoint }
+    },
+
     data: () => ({
-      active: false
+      isActive: false,
+      isDisabled: false
     })
   }
 </script>
@@ -57,10 +98,6 @@
     -moz-box-shadow:inset 0px 0px 0px 1px #e3a746;
     box-shadow:inset 0px 0px 0px 1px #e3a746;
     color: #e3a746 !important;
-  }
-
-  .no-bg-hover::before {
-    background-color: transparent !important;
   }
   
   .active-letter {
@@ -91,10 +128,20 @@
     font-size: 22px !important;
   }
 
+  .button-letter::before {
+    background-color: transparent !important;
+  }
+
   /* Smartphones (portrait and landscape) ----------- */
   @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     .button-letter, .button-text {
       font-size: 18px !important;
+      min-height: 38px;
     }
+  }
+
+  .unclickable {
+    pointer-events: none !important;
+    opacity: 0.4;
   }
 </style>
