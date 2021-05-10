@@ -71,7 +71,7 @@
         ]"
         style="overflow-y: auto;"
       >
-        <div>
+        <div class="text-center">
           <v-text-field
             v-model="name"
             x-large
@@ -151,12 +151,12 @@
         },
         {
           question: "How do you deal with anger?",
-          type: 'md', size: 'md',
+          type: 'md', size: 'lg',
           choices: [
-            { answer: "Excercise", result: "marksman" },
-            { answer: "Scream", result: "fighter" },
-            { answer: "Meditate", result: "tank" },
-            { answer: "Sleep", result: "controller" }
+            { answer: "&#8220;I know we're both tired but I'd appreciate a little help.&#8221;", result: "marksman" },
+            { answer: "...zzz...", result: "tank" },
+            { answer: "<i>After five minutes</i>...&#8221;I-I'm sorry...&#8221;", result: "controller" },
+            { answer: "*BURNS EVERYONE*", result: "fighter" }
           ]
         },
         {
@@ -167,6 +167,16 @@
             { answer: "Shape shift", result: "hybrid" },
             { answer: "Read minds", result: "mage" },
             { answer: "Teleport", result: "fighter" }
+          ]
+        },
+        {
+          question: "What element would be your bending power?",
+          type: 'md', size: 'md',
+          choices: [
+            { answer: "Earth", result: "tank" },
+            { answer: "Air", result: "controller" },
+            { answer: "Water", result: "mage" },
+            { answer: "Fire", result: "fighter" }
           ]
         },
         {
@@ -203,16 +213,6 @@
           ]
         },
         {
-          question: "What would you die for?",
-          type: 'md', size: 'md',
-          choices: [
-            { answer: "Love", result: "controller" },
-            { answer: "Dignity", result: "tank" },
-            { answer: "Money", result: "slayer" },
-            { answer: "Family", result: "mage" }
-          ]
-        },
-        {
           question: "This might be the reason you'll get behind the bars.",
           type: 'md', size: 'md',
           choices: [
@@ -229,27 +229,7 @@
             { answer: "Monkey", result: "controller" },
             { answer: "Bird", result: "mage" },
             { answer: "Snake", result: "slayer" },
-            { answer: "Bear", result: "assassin" }
-          ]
-        },
-        {
-          question: "Astrological Element",
-          type: 'md', size: 'md',
-          choices: [
-            { answer: "Earth", result: "tank" },
-            { answer: "Air", result: "controller" },
-            { answer: "Water", result: "mage" },
-            { answer: "Fire", result: "fighter" }
-          ]
-        },
-        {
-          question: "What would be the best spot for vacation?",
-          type: 'md', size: 'md',
-          choices: [
-            { answer: "Beach", result: "fighter" },
-            { answer: "Mountain", result: "hybrid" },
-            { answer: "Staycation", result: "marksman" },
-            { answer: "Travel", result: "slayer" }
+            { answer: "Bear", result: "fighter" }
           ]
         },
         {
@@ -268,8 +248,18 @@
           choices: [
             { answer: "Dial 9-1-1", result: "marksman" },
             { answer: "Observe and investigate", result: "controller" },
-            { answer: "Pretend to sleep and hold onto a hammer", result: "mage" },
+            { answer: "Pretend to sleep but hold onto a hammer", result: "mage" },
             { answer: "Record everything on a live video", result: "hybrid" }
+          ]
+        },
+        {
+          question: "What would be the best spot for vacation?",
+          type: 'md', size: 'md',
+          choices: [
+            { answer: "Beach", result: "fighter" },
+            { answer: "Mountain", result: "hybrid" },
+            { answer: "Staycation", result: "marksman" },
+            { answer: "Travel", result: "slayer" }
           ]
         },
         {
@@ -290,6 +280,16 @@
             { answer: "Use smoke screen to escape", result: "controller" },
             { answer: "Disguise", result: "mage" },
             { answer: "Poison attack", result: "hybrid" }
+          ]
+        },
+        {
+          question: "What would you die for?",
+          type: 'md', size: 'md',
+          choices: [
+            { answer: "Love", result: "controller" },
+            { answer: "Dignity", result: "tank" },
+            { answer: "Money", result: "slayer" },
+            { answer: "Family", result: "mage" }
           ]
         }
       ]
@@ -337,7 +337,7 @@
           this.isActive = true;
           this.activeKey = key;
           this.$store.commit(`main/increaseRole`, role);
-          // console.log('[roles]', this.$store.getters['main/roles']);
+          console.log('[roles]', this.$store.getters['main/roles']);
           setTimeout(()=>{
             this.isActive = false;
             this.component = 'LastPage'

@@ -5,7 +5,7 @@
     color="transparent"
   >
     <template v-slot:activator="{ on, attrs }">
-      <div class="d-flex align-start justify-center text-center">
+      <div class="d-flex align-center justify-center text-center">
         <v-btn
           tile
           dark
@@ -36,9 +36,8 @@
               { 'active-text':isActive, 'unclickable':isDisabled }
             ]"
             @click="isActive=true"
-          >
-            {{ text }}
-          </div>
+            v-html="text"
+          ></div>
         </v-hover>
       </div>
     </template>
