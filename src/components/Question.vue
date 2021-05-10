@@ -1,6 +1,7 @@
 <template>
   <div class="d-flex align-center justify-center">
     <v-avatar
+      v-if="counter"
       color="#0BC6E3"
       size="20"
       class="mr-5"

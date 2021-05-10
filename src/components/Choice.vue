@@ -1,5 +1,6 @@
 <template>
   <v-tooltip
+    :disabled="hideTooltip"
     left
     color="transparent"
   >
@@ -17,7 +18,7 @@
           :height="screen.smAndDown?'38':'44'"
           color="#e3a746"
           :class="[
-            'button-letter mr-5',
+            'button-letter mr-3',
             isActive?'active-letter':'letter',
             { 'unclickable':isDisabled }
           ]"
@@ -59,7 +60,8 @@
       disable: { type: Boolean, default: false },
       active: { type: Boolean, default: false },
       letter: { type: String, default: '' },
-      text: { type: String, default: '' }
+      text: { type: String, default: '' },
+      hideTooltip: { type: Boolean, default: false }
     },
 
     watch: {

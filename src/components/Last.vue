@@ -15,7 +15,7 @@
         class="mb-10 overflow-y-auto"
         style="max-height: 70vh;"
       >
-        <div class="mb-5 text-center paragraph-1">The stars are aligned for you as a {{ role }}, Romeo.</div>
+        <div class="mb-5 text-center paragraph-1">The stars are aligned for you as a {{ role }}, {{ name }}.</div>
 
         <div class="text-justify" v-text="roles[role]"></div>
       </div>
@@ -47,7 +47,8 @@
 
     computed: {
       screen() { return this.$vuetify.breakpoint },
-      role() { return this.$store.getters['main/role'] }
+      role() { return this.$store.getters['main/role'] },
+      name() { return this.$store.getters['main/name'] }
     },
   }
 </script>

@@ -10,11 +10,57 @@
       ></v-img>
     </div>
 
-    <div class="mx-2">
-      <div class="mb-10">
+    <div
+      v-if="stage=='quiz'"
+      class="mx-2"
+    >
+      <div
+        :class="[
+          'mb-10',
+          screen.smAndDown?'wrapper-sm':'wrapper-lg'
+        ]"
+      >
         <text-question
           :counter="page"
           :question="questions[page-1].question"
+        ></text-question>
+      </div>
+      
+      <v-row
+        :class="[
+          'pa-1',
+          screen.smAndDown?'wrapper-sm':'wrapper-lg'
+        ]"
+        style="overflow-y: auto;"
+      >
+        <v-col
+          v-for="(choice,key) in questions[page-1].choices"
+          :key="key"
+          cols="12" sm="12" md="12" :lg="sizes[questions[page-1].size].cols" :xl="sizes[questions[page-1].size].cols"
+          :class="[
+            'py-0',
+            key+1!==questions[page-1].length?`mb-5 ${sizes[questions[page-1].size].class}`:''
+          ]"
+        >
+          <button-choice
+            :hide-tooltip="questions[page-1].size!=='lg'"
+            :active="isActive&&key==activeKey"
+            :disable="isActive&&key!==activeKey"
+            :letter="letters[questions[page-1].type][key]"
+            :text="choice.answer"
+            @click="next(key, choice.result)"
+          ></button-choice>
+        </v-col>
+      </v-row>
+    </div>
+
+    <div
+      v-else
+      class="mx-2"
+    >
+      <div class="mb-10">
+        <text-question
+          question="How do I call you, summoner?"
         ></text-question>
       </div>
       
@@ -25,23 +71,31 @@
         ]"
         style="overflow-y: auto;"
       >
-        <div
-          class="mb-5"
-          v-for="(choice,key) in questions[page-1].choices"
-          :key="key"
-        >
-          <button-choice
-            :active="isActive&&key==activeKey"
-            :disable="isActive&&key!==activeKey"
-            :letter="letters[key]"
-            :text="choice.answer"
-            @click="next(key, choice.result)"
-          ></button-choice>
+        <div>
+          <v-text-field
+            v-model="name"
+            x-large
+            outlined
+            autofocus
+            dark
+            centered
+            color="#e3a746"
+            class="text-center justify-center"
+          ></v-text-field>
+
+          <base-button
+            v-if="name"
+            text="Next"
+            @click="confirm"
+          ></base-button>
         </div>
       </div>
     </div>
 
-    <div style="position: absolute; bottom: 30px; min-width: 300px;">
+    <div
+      v-if="stage=='quiz'"
+      style="position: absolute; bottom: 30px; min-width: 300px;"
+    >
       <progress-bar></progress-bar>
     </div>
   </div>
@@ -64,33 +118,178 @@
     data: () => ({
       isActive: false,
       activeKey: null,
-      letters: [ 'W', 'A', 'S', 'D' ],
+      // letter choices
+      letters: {
+        sm: ['Y', 'N'],
+        md: [ 'W', 'A', 'S', 'D' ],
+        lg: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+      },
+      sizes: {
+        sm: {
+          class: 'pr-3',
+          cols: '4'
+        },
+        md: {
+          class: 'pr-2',
+          cols: '6'
+        },
+        lg: {
+          class: '',
+          cols: '12'
+        }
+      },
       questions: [
         {
-          question: "How would you describe your playstyle?",
+          question: "You're being harassed online, how will you deal with it?",
+          type: 'md', size: 'md',
           choices: [
-            { answer: "Agressive", result: "fighter" },
-            { answer: "Calculated", result: "mage" },
-            { answer: "Sneaky", result: "hybrid" },
-            { answer: "Tactical", result: "tank" }
+            { answer: "File a report", result: "mage" },
+            { answer: "Gather screenshots", result: "slayer" },
+            { answer: "Debate or defend", result: "tank" },
+            { answer: "Block and unfollow", result: "hybrid" }
           ]
         },
         {
-          question: "Which of the following do you excel the most at?",
+          question: "How do you deal with anger?",
+          type: 'md', size: 'md',
           choices: [
-            { answer: "Farm minions", result: "marksman" },
-            { answer: "Heal, shield and protect", result: "controller" },
-            { answer: "Get kills", result: "slayer" },
-            { answer: "Quick thinking and control", result: "mage" }
-          ],
+            { answer: "Excercise", result: "marksman" },
+            { answer: "Scream", result: "fighter" },
+            { answer: "Meditate", result: "tank" },
+            { answer: "Sleep", result: "controller" }
+          ]
         },
         {
-          question: "Imagine you are being chased by the entire enemy team! What would you rather do?",
+          question: "The Magical Pill",
+          type: 'md', size: 'md',
           choices: [
-            { answer: "Try to use my crowd control abilities to stop them.", result: "mage" },
-            { answer: "Stealth away and leave them wonder where I went.", result: "slayer" },
-            { answer: "Stop and fight them. Might get a kill or two before I die.", result: "fighter" },
-            { answer: "Ping for help and try to look for my team.", result: "marksman" }
+            { answer: "Invisibility", result: "slayer" },
+            { answer: "Shape shift", result: "hybrid" },
+            { answer: "Read minds", result: "mage" },
+            { answer: "Teleport", result: "fighter" }
+          ]
+        },
+        {
+          question: "Which of these resembles you most?",
+          type: 'md', size: 'lg',
+          choices: [
+            { answer: "Agressive, adventurous and impatient", result: "tank" },
+            { answer: "Practical, stubborn and persistent", result: "controller" },
+            { answer: "Intimate, honest and realist", result: "marksman" },
+            { answer: "Extrovert, playful and inconsistent", result: "hybrid" }
+          ]
+        },
+        {
+          question: "You won the lottery, what would you do with the money?",
+          type: 'lg', size: 'sm',
+          choices: [
+            { answer: "Family", result: "controller" },
+            { answer: "Save", result: "fighter" },
+            { answer: "Donate", result: "mage" },
+            { answer: "Business", result: "marksman" },
+            { answer: "Security", result: "slayer" },
+            { answer: "Education", result: "tank" },
+            { answer: "Travel", result: "hybrid" }
+          ]
+        },
+        {
+          question: "Equip yourself in a zombie apocalypse.",
+          type: 'md', size: 'md',
+          choices: [
+            { answer: "First Aid Kit", result: "controller" },
+            { answer: "Knife", result: "fighter" },
+            { answer: "Flashlight", result: "marksman" },
+            { answer: "Phone", result: "hybrid" }
+          ]
+        },
+        {
+          question: "What would you die for?",
+          type: 'md', size: 'md',
+          choices: [
+            { answer: "Love", result: "controller" },
+            { answer: "Dignity", result: "tank" },
+            { answer: "Money", result: "slayer" },
+            { answer: "Family", result: "mage" }
+          ]
+        },
+        {
+          question: "This might be the reason you'll get behind the bars.",
+          type: 'md', size: 'md',
+          choices: [
+            { answer: "Bullying", result: "mage" },
+            { answer: "Adultery", result: "hybrid" },
+            { answer: "Murder", result: "marksman" },
+            { answer: "Corruption", result: "tank" }
+          ]
+        },
+        {
+          question: "Spirit Animal",
+          type: 'md', size: 'md',
+          choices: [
+            { answer: "Monkey", result: "controller" },
+            { answer: "Bird", result: "mage" },
+            { answer: "Snake", result: "slayer" },
+            { answer: "Bear", result: "assassin" }
+          ]
+        },
+        {
+          question: "Astrological Element",
+          type: 'md', size: 'md',
+          choices: [
+            { answer: "Earth", result: "tank" },
+            { answer: "Air", result: "controller" },
+            { answer: "Water", result: "mage" },
+            { answer: "Fire", result: "fighter" }
+          ]
+        },
+        {
+          question: "What would be the best spot for vacation?",
+          type: 'md', size: 'md',
+          choices: [
+            { answer: "Beach", result: "fighter" },
+            { answer: "Mountain", result: "hybrid" },
+            { answer: "Staycation", result: "marksman" },
+            { answer: "Travel", result: "slayer" }
+          ]
+        },
+        {
+          question: "At parties, I tend to be the...",
+          type: 'md', size: 'md',
+          choices: [
+            { answer: "loner", result: "fighter" },
+            { answer: "life of the party", result: "marksman" },
+            { answer: "missing in action", result: "slayer" },
+            { answer: "designated driver", result: "controller" }
+          ]
+        },
+        {
+          question: "You're alone in the house and you hear noises while you're sleeping in the middle of the night, what will you do?",
+          type: 'md', size: 'lg',
+          choices: [
+            { answer: "Dial 9-1-1", result: "marksman" },
+            { answer: "Observe and investigate", result: "controller" },
+            { answer: "Pretend to sleep and hold onto a hammer", result: "mage" },
+            { answer: "Record everything on a live video", result: "hybrid" }
+          ]
+        },
+        {
+          question: "What scares you the most?",
+          type: 'md', size: 'md',
+          choices: [
+            { answer: "Alone at home", result: "marksman" },
+            { answer: "Buried alive", result: "fighter" },
+            { answer: "Being a burden", result: "controller" },
+            { answer: "Short life", result: "tank" }
+          ]
+        },
+        {
+          question: "You're losing in a war, what would be your alternative plan?",
+          type: 'md', size: 'md',
+          choices: [
+            { answer: "Surprise attack", result: "slayer" },
+            { answer: "Use smoke screen to escape", result: "controller" },
+            { answer: "Disguise", result: "mage" },
+            { answer: "Poison attack", result: "hybrid" }
           ]
         }
       ]
@@ -98,6 +297,14 @@
 
     computed: {
       screen() { return this.$vuetify.breakpoint },
+      stage: {
+        get() { return this.$store.getters['main/stage'] },
+        set(val) { this.$store.commit('main/setStage', val) }
+      },
+      name: {
+        get() { return this.$store.getters['main/name'] },
+        set(val) { this.$store.commit('main/setName', val) }
+      },
       component: {
         get() { return this.$store.getters['main/component'] },
         set(val) { this.$store.commit('main/setComponent', val) }
@@ -113,6 +320,9 @@
     },
 
     methods: {
+      confirm() {
+        this.stage = 'quiz';
+      },
       next(key, role) {
         if (this.page < this.total) {
           this.isActive = true;
@@ -127,6 +337,7 @@
           this.isActive = true;
           this.activeKey = key;
           this.$store.commit(`main/increaseRole`, role);
+          // console.log('[roles]', this.$store.getters['main/roles']);
           setTimeout(()=>{
             this.isActive = false;
             this.component = 'LastPage'
@@ -144,7 +355,7 @@
   }
 
   .wrapper-lg {
-    max-width: 70vw;
+    max-width: 60vw;
     max-height: 80vh;
   }
 </style>
