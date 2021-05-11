@@ -52,6 +52,10 @@
     color: #e3a746;
   }
 
+  a {
+    text-decoration: none !important;
+  }
+
   /* Smartphones (portrait and landscape) ----------- */
   @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     .paragraph-1 {

@@ -46,6 +46,34 @@
           </v-tooltip>
         </div>
       </div>
+
+      <v-tooltip top>
+        <template v-slot:activator="{ on, attrs }">
+          <a
+            href="#" 
+            onclick="
+              window.open(
+                'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href), 
+                'facebook-share-dialog', 
+                'width=626,height=436'); 
+              return false;
+            "
+            style="position: absolute;"
+            class="facebook"
+          >
+            <v-icon
+              v-bind="attrs"
+              v-on="on"
+              size="50"
+              color="#1877f2"
+            >
+              mdi-facebook
+            </v-icon>
+          </a>
+        </template>
+
+        <span>Share on Facebook</span>
+      </v-tooltip>
     </div>
   </div>
 </template>
@@ -139,8 +167,14 @@
     max-width: 40vw;
   }
 
+  .facebook {
+    top: 50%; right: 20%;
+  }
+
   /* Smartphones (portrait and landscape) ----------- */
   @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
-    //
+    .facebook {
+      top: 2%; right: 2%;
+    }
   }
 </style>
