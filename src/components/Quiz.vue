@@ -336,7 +336,9 @@
 
           letters.forEach((letter, letterIndex) => {
             var choice = question.choices.find((choice, choiceIndex) => choiceIndex == letterIndex);
-            if (e.key==letter || e.key==letter.toLowerCase())
+            var letterString = e.key==letter || e.key==letter.toLowerCase();
+            
+            if (letterString && !me.isActive)
               me.next(letterIndex, choice.result);
           });
         }

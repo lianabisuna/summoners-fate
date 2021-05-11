@@ -47,7 +47,7 @@
         </div>
       </div>
 
-      <v-tooltip top>
+      <v-tooltip :disabled="screen.smAndDown" top>
         <template v-slot:activator="{ on, attrs }">
           <a
             href="#" 
