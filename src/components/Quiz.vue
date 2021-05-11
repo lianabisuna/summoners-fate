@@ -319,11 +319,36 @@
       }
     },
 
+    mounted() {
+      var me = this;
+
+      window.addEventListener("keypress", e => {
+        if (me.name && me.stage=='main')
+          if (e.key == 'Enter')
+            me.confirm();
+      });
+
+      window.addEventListener("keypress", e => {
+        if (me.stage=='quiz') {
+          var question = me.questions[me.page-1]
+          var type = question.type;
+          var letters = me.letters[type];
+
+          letters.forEach((letter, letterIndex) => {
+            var choice = question.choices.find((choice, choiceIndex) => choiceIndex == letterIndex);
+            if (e.key==letter || e.key==letter.toLowerCase())
+              me.next(letterIndex, choice.result);
+          });
+        }
+      });
+    },
+
     methods: {
       confirm() {
         this.stage = 'quiz';
       },
       next(key, role) {
+        console.log('[key, role]', key, role);
         if (this.page < this.total) {
           this.isActive = true;
           this.activeKey = key;
