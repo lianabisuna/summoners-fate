@@ -17,6 +17,11 @@
 </script>
 
 <style lang="scss">
+  @font-face {
+    font-family: "Optimus Princeps";
+    src: url("./assets/font/OptimusPrinceps.ttf") format("truetype");
+  }
+
   #app {
     max-height: 100vh;
     max-width: 100vw;
@@ -40,6 +45,7 @@
 
   .paragraph-4 {
     font-size: 4em;
+    font-family: 'Optimus Princeps';
   }
 
   .text-yellow {
