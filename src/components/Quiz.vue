@@ -350,7 +350,6 @@
         this.stage = 'quiz';
       },
       next(key, role) {
-        console.log('[key, role]', key, role);
         if (this.page < this.total) {
           this.isActive = true;
           this.activeKey = key;
@@ -364,10 +363,10 @@
           this.isActive = true;
           this.activeKey = key;
           this.$store.commit(`main/increaseRole`, role);
-          console.log('[roles]', this.$store.getters['main/roles']);
           setTimeout(()=>{
             this.isActive = false;
             this.component = 'LastPage'
+            this.stage = 'last';
           }, 500);
         }
       }
